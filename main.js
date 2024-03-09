@@ -1,19 +1,13 @@
 const canvas = document.getElementById('idCanvas');
 const ctx = canvas.getContext('2d');
 
-canvas.addEventListener('click', (event) => {
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  console.log('Click coordinates:', `X: ${x}, Y: ${y}`);
-});
-
 const baseImageUrl = 'id-template.jpg';
 
 const baseImage = new Image();
 baseImage.src = baseImageUrl;
 baseImage.onload = function() {
     ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
+    setTimeout(generateID, 10);
 }
 
 const defaultPhotoUrl = 'default-helldiver.png'
@@ -69,11 +63,11 @@ function processPhoto() {
         }
         userPhoto.src = defaultPhotoUrl;
     }
-    const shipImage = new Image();
-    shipImage.onload = function() {
-        drawCroppedImage(shipImage, 65, 315, 'ship')
+    const patchImage = new Image();
+    patchImage.onload = function() {
+        drawCroppedImage(patchImage, 65, 314, 'patch')
     }
-    shipImage.src = 'default-ship.png'
+    patchImage.src = 'default-patch.jpg'
 }
 
 
@@ -82,8 +76,8 @@ function drawCroppedImage(image, dx, dy, type = 'diver') {
     if (type === 'diver') {
         desiredWidth = 222;
         desiredHeight = 258;
-    } else if (type === 'ship') {
-        desiredWidth = 133;
+    } else if (type === 'patch') {
+        desiredWidth = 134;
         desiredHeight = 133;
     }
 
@@ -108,4 +102,3 @@ function drawCroppedImage(image, dx, dy, type = 'diver') {
         ctx.drawImage(image, srcX, 0, srcWidth - srcX, image.height, dx, dy, desiredWidth, desiredHeight);
     }
 }
-setTimeout(generateID, 10)
