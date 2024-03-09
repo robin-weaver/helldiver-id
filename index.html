@@ -3,6 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helldiver ID Creatorr</title>
+    <title>Helldiver ID Creator</title>
+    <script defer src="main.js"></script>
+    <link href="https://fonts.cdnfonts.com/css/jumbotron" rel="stylesheet">
 </head>
+<style>
+    @font-face {
+        font-family: 'Waiting Summer';
+        src: url("https://fonts.cdnfonts.com/s/107106/Waiting Summer.woff");
+    }
+</style>
+<body>
+    <h2>Helldiver ID Registration</h2>
+    <canvas id="idCanvas" width="400" height="250"></canvas>
+    <div>
+        <input type="text" id="nameInput" placeholder="Name" value="Ozymandias">
+        <input type="text" id="rankInput" placeholder="Rank" value="Commander">
+        <input type="text" id="titleInput" placeholder="Title" value="I dunno?">
+        <input type="text" id="unitInput" placeholder="Unit" value="Helldivers">
+        <input type="text" id="shipInput" placeholder="Ship" value="SES Titan of the State">
+        <input type="text" id="steamInput" placeholder="Steam ID">
+        <input type="text" id="psnInput" placeholder="PSN">
+        <!-- Other inputs can be added similarly -->
+        <input type="file" id="photoUpload" accept="image/*">
+        <button onclick="generateID()">Generate ID</button>
+    </div>
+
+</body>
 </html>
