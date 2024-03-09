@@ -1,33 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helldiver ID Creator</title>
-    <script defer src="main.js"></script>
-    <link href="https://fonts.cdnfonts.com/css/jumbotron" rel="stylesheet">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helldiver Enrollment</title>
+<script defer src="main.js"></script>
+<link href="https://fonts.cdnfonts.com/css/jumbotron" rel="stylesheet">
 <style>
     @font-face {
         font-family: 'Waiting Summer';
         src: url("https://fonts.cdnfonts.com/s/107106/Waiting Summer.woff");
     }
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+        font-family: 'Waiting Summer', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    h2 {
+        margin: 20px 0;
+    }
+    #idCanvas {
+        border: 2px solid #64ffda;
+        margin-bottom: 20px;
+    }
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+    input[type=text], input[type=file] {
+        background-color: #333;
+        color: #e0e0e0;
+        border: 1px solid #777;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    input::placeholder {
+        color: #bbb;
+    }
+    input[type=text]:focus, input[type=file]:focus {
+        outline: none;
+        border-color: #64ffda;
+    }
+    button {
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    button:hover {
+        background-color: #005fa3;
+    }
 </style>
+</head>
 <body>
-    <h2>Helldiver ID Registration</h2>
-    <canvas id="idCanvas" width="400" height="250"></canvas>
-    <div>
-        <input type="text" id="nameInput" placeholder="Name" value="Ozymandias">
-        <input type="text" id="rankInput" placeholder="Rank" value="Commander">
-        <input type="text" id="titleInput" placeholder="Title" value="I dunno?">
-        <input type="text" id="unitInput" placeholder="Unit" value="Helldivers">
-        <input type="text" id="shipInput" placeholder="Ship" value="SES Titan of the State">
-        <input type="text" id="steamInput" placeholder="Steam ID">
-        <input type="text" id="psnInput" placeholder="PSN">
-        <!-- Other inputs can be added similarly -->
-        <input type="file" id="photoUpload" accept="image/*">
-        <button onclick="generateID()">Generate ID</button>
-    </div>
+<h2>Helldiver Enrollment</h2>
+<canvas id="idCanvas" width="400" height="250"></canvas>
+<div>
+    <label for="nameInput">Name</label><input type="text" id="nameInput" placeholder="Name" value="John Helldiver">
+    <label for="rankInput">Rank</label><input type="text" id="rankInput" placeholder="Rank" value="10">
+    <label for="titleInput">Title</label><input type="text" id="titleInput" placeholder="Title" value="Space Cadet">
+    <label for="unitInput">Unit</label><input type="text" id="unitInput" placeholder="Unit" value="Creek Kamikaze">
+    <label for="shipInput">Ship Title</label><input type="text" id="shipInput" placeholder="Ship" value="SES Titan of the State">
+    <label for="steamInput">Steam ID</label><input type="text" id="steamInput" placeholder="Steam ID" value="12345678">
+    <label for="psnInput">PSN ID</label><input type="text" id="psnInput" placeholder="PSN" value="johndiver99">
+    <label for="photoUpload">Helldiver Image</label><input type="file" id="photoUpload" accept="image/*">
+    <button onclick="generateID()">Generate ID</button>
+</div>
 
+<p>Helldivers ID creator by Robin Weaver | Version 1.0</p>
 </body>
 </html>
