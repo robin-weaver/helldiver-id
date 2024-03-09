@@ -8,7 +8,7 @@ canvas.addEventListener('click', (event) => {
   console.log('Click coordinates:', `X: ${x}, Y: ${y}`);
 });
 
-const baseImageUrl = '/docs/assets/id-template.jpg';
+const baseImageUrl = 'id-template.jpg';
 
 const baseImage = new Image();
 baseImage.src = baseImageUrl;
@@ -16,7 +16,7 @@ baseImage.onload = function() {
     ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
 }
 
-const defaultPhotoUrl = '/docs/assets/default-helldiver.png'
+const defaultPhotoUrl = 'default-helldiver.png'
 
 
 function generateID() {
@@ -77,7 +77,7 @@ function processPhoto() {
     shipImage.onload = function() {
         drawCroppedImage(shipImage, 28, 145, 'ship')
     }
-    shipImage.src = '/docs/assets/default-ship.png'
+    shipImage.src = 'default-ship.png'
 }
 
 
