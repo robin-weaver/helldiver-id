@@ -32,24 +32,20 @@ function generateID() {
     const steam = document.getElementById('steamInput').value;
     const psn = document.getElementById('psnInput').value;
 
-    ctx.font = "16px Waiting Summer";
-    ctx.fillText(rank, 165, 87);
-    ctx.font = "12px Waiting Summer";
-    ctx.fillText(name, 165, 57);
-
-    ctx.fillText(title, 165, 113);
+    ctx.font = "32px Waiting Summer";
+    ctx.fillText(name, 396, 125, 290);
+    ctx.fillText(rank, 396, 188);
+    ctx.fillText(title, 396, 249, 290);
+    ctx.fillText(unit, 375, 310, 310);
+    ctx.fillText(ship, 375, 370, 310);
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0'); // Pad with leading zero if necessary
     const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
     const yyyy = today.getFullYear();
     const formattedDate = dd + '/' + mm + '/' + yyyy;
-    ctx.fillText(formattedDate, 88, 238)
-
-    ctx.font = "10px Waiting Summer";
-    ctx.fillText(unit, 157, 142);
-    ctx.fillText(ship, 157, 170);
-    ctx.fillText(steam, 223, 238)
-    ctx.fillText(psn, 325, 238)
+    ctx.fillText(formattedDate, 208, 514, 155)
+    ctx.fillText(steam, 534, 514, 160)
+    ctx.fillText(psn, 780, 514, 160)
 
     processPhoto();
 }
@@ -61,7 +57,7 @@ function processPhoto() {
         reader.onload = function(e) {
             const userPhoto = new Image();
             userPhoto.onload = function() {
-                drawCroppedImage(userPhoto, 18, 6);
+                drawCroppedImage(userPhoto, 45, 14);
             }
             userPhoto.src = e.target.result;
         }
@@ -69,13 +65,13 @@ function processPhoto() {
     } else {
         const userPhoto = new Image();
         userPhoto.onload = function() {
-            drawCroppedImage(userPhoto, 18, 6);
+            drawCroppedImage(userPhoto, 45, 14);
         }
         userPhoto.src = defaultPhotoUrl;
     }
     const shipImage = new Image();
     shipImage.onload = function() {
-        drawCroppedImage(shipImage, 28, 145, 'ship')
+        drawCroppedImage(shipImage, 65, 315, 'ship')
     }
     shipImage.src = 'default-ship.png'
 }
@@ -84,11 +80,11 @@ function processPhoto() {
 function drawCroppedImage(image, dx, dy, type = 'diver') {
     let desiredWidth, desiredHeight;
     if (type === 'diver') {
-        desiredWidth = 93;
-        desiredHeight = 120;
+        desiredWidth = 222;
+        desiredHeight = 258;
     } else if (type === 'ship') {
-        desiredWidth = 55;
-        desiredHeight = 63;
+        desiredWidth = 133;
+        desiredHeight = 133;
     }
 
     let dWidth, dHeight;
