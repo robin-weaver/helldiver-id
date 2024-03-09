@@ -11,6 +11,7 @@ baseImage.onload = function() {
 }
 
 const defaultPhotoUrl = 'default-helldiver.png'
+const defaultPatchUrl = 'default-patch.jpg'
 
 
 function generateID() {
@@ -63,11 +64,24 @@ function processPhoto() {
         }
         userPhoto.src = defaultPhotoUrl;
     }
-    const patchImage = new Image();
-    patchImage.onload = function() {
-        drawCroppedImage(patchImage, 65, 314, 'patch')
+    const patchUpload = document.getElementById('patchUpload');
+    if (patchUpload.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const patchPhoto = new Image();
+            patchPhoto.onload = function() {
+                drawCroppedImage(patchPhoto, 65, 314, 'patch');
+            }
+            patchPhoto.src = e.target.result;
+        }
+        reader.readAsDataURL(patchUpload.files[0]);
+    } else {
+        const patchPhoto = new Image();
+        patchPhoto.onload = function() {
+            drawCroppedImage(patchPhoto, 65, 314, 'patch');
+        }
+        patchPhoto.src = defaultPatchUrl;
     }
-    patchImage.src = 'default-patch.jpg'
 }
 
 
