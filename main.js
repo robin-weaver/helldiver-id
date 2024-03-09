@@ -1,20 +1,116 @@
 const canvas = document.getElementById('idCanvas');
+canvas.width = 960;
+canvas.height = 540
 const ctx = canvas.getContext('2d');
 
-const baseImageUrl = 'id-template.jpg';
 
-const baseImage = new Image();
-baseImage.src = baseImageUrl;
-baseImage.onload = function() {
-    ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
-    setTimeout(generateID, 10);
-}
+canvas.addEventListener("click", function(event) {
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  console.log("Click coordinates:", x, y);
+});
+
+const type1TempUrl = 'id-template.jpg'
+const type2TempUrl = 'id-template-2.webp'
+let baseImageUrl = type1TempUrl
+
 
 const defaultPhotoUrl = 'default-helldiver.png'
 const defaultPatchUrl = 'default-patch.jpg'
+let baseImage;
+let idType = '1';
+
+const type1Measurements = {
+    font: "32px Waiting Summer",
+    fillStyle: 'black',
+    name: {
+        x: 396,
+        y: 125,
+        maxWidth: 290
+    },
+    rank: {
+        x: 396,
+        y: 188,
+        maxWidth: 290
+    },
+    title: {
+        x: 396,
+        y: 249,
+        maxWidth: 290
+    },
+    unit: {
+        x: 375,
+        y: 310,
+        maxWidth: 310
+    },
+    ship: {
+        x: 375,
+        y: 370,
+        maxWidth: 310
+    },
+    hdImage: {
+        x: 45,
+        y: 14,
+        width: 222,
+        height: 258
+    },
+    patchImage: {
+        x: 65,
+        y: 314,
+        width: 134,
+        height: 133
+    }
+}
+
+const type2Measurements = {
+    font: "32px Timeless",
+    fillStyle: 'white',
+    name: {
+        x: 292,
+        y: 270,
+        maxWidth: 250
+    },
+    rank: {
+        x: 430,
+        y: 205,
+        maxWidth: 100
+    },
+    unit: {
+        x: 292,
+        y: 420,
+        maxWidth: 250
+    },
+    ship: {
+        x: 292,
+        y: 485,
+        maxWidth: 250
+    },
+    hdImage: {
+        x: 48,
+        y: 43,
+        width: 216,
+        height: 238
+    },
+    patchImage: {
+        x: 48,
+        y: 325,
+        width: 216,
+        height: 172
+    }
+}
+
+const types = {
+    1: type1Measurements,
+    2: type2Measurements
+}
+
+let type = type1Measurements
 
 
 function generateID() {
+    type = types[idType]
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
     
@@ -26,33 +122,43 @@ function generateID() {
     const ship = document.getElementById('shipInput').value;
     const steam = document.getElementById('steamInput').value;
     const psn = document.getElementById('psnInput').value;
+    const seaf = document.getElementById('seafIDInput').value;
 
-    ctx.font = "32px Waiting Summer";
-    ctx.fillText(name, 396, 125, 290);
-    ctx.fillText(rank, 396, 188);
-    ctx.fillText(title, 396, 249, 290);
-    ctx.fillText(unit, 375, 310, 310);
-    ctx.fillText(ship, 375, 370, 310);
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0'); // Pad with leading zero if necessary
-    const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-    const yyyy = today.getFullYear();
-    const formattedDate = dd + '/' + mm + '/' + yyyy;
-    ctx.fillText(formattedDate, 208, 514, 155)
-    ctx.fillText(steam, 534, 514, 160)
-    ctx.fillText(psn, 780, 514, 160)
+    ctx.font = type.font
+    ctx.fillStyle = type.fillStyle
+    ctx.fillText(name, type.name.x, type.name.y, type.name.maxWidth);
+    ctx.fillText(rank, type.rank.x, type.rank.y, type.rank.maxWidth);
+
+    ctx.fillText(unit, type.unit.x, type.unit.y, type.unit.maxWidth);
+    ctx.fillText(ship, type.ship.x, type.ship.y, type.ship.maxWidth);
+    if (idType === '1') {
+        ctx.fillText(title, type.title.x, type.title.y, type.title.maxWidth);
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0'); // Pad with leading zero if necessary
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+        const yyyy = today.getFullYear();
+        const formattedDate = dd + '/' + mm + '/' + yyyy;
+        ctx.fillText(formattedDate, 208, 514, 155)
+        ctx.fillText(steam, 534, 514, 160)
+        ctx.fillText(psn, 780, 514, 160)
+    } else if (idType === '2') {
+        ctx.fillText(seaf, 607, 485)
+        ctx.fillText('HD-01', 292, 205)
+    }
+
 
     processPhoto();
 }
 
 function processPhoto() {
+    type = types[idType]
     const photoUpload = document.getElementById('photoUpload');
     if (photoUpload.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
             const userPhoto = new Image();
             userPhoto.onload = function() {
-                drawCroppedImage(userPhoto, 45, 14);
+                drawCroppedImage(userPhoto, type.hdImage.x, type.hdImage.y);
             }
             userPhoto.src = e.target.result;
         }
@@ -60,7 +166,7 @@ function processPhoto() {
     } else {
         const userPhoto = new Image();
         userPhoto.onload = function() {
-            drawCroppedImage(userPhoto, 45, 14);
+            drawCroppedImage(userPhoto, type.hdImage.x, type.hdImage.y);
         }
         userPhoto.src = defaultPhotoUrl;
     }
@@ -70,7 +176,7 @@ function processPhoto() {
         reader.onload = function(e) {
             const patchPhoto = new Image();
             patchPhoto.onload = function() {
-                drawCroppedImage(patchPhoto, 65, 314, 'patch');
+                drawCroppedImage(patchPhoto, type.patchImage.x, type.patchImage.y, 'patch');
             }
             patchPhoto.src = e.target.result;
         }
@@ -78,21 +184,22 @@ function processPhoto() {
     } else {
         const patchPhoto = new Image();
         patchPhoto.onload = function() {
-            drawCroppedImage(patchPhoto, 65, 314, 'patch');
+            drawCroppedImage(patchPhoto, type.patchImage.x, type.patchImage.y, 'patch');
         }
         patchPhoto.src = defaultPatchUrl;
     }
 }
 
 
-function drawCroppedImage(image, dx, dy, type = 'diver') {
+function drawCroppedImage(image, dx, dy, imgtype = 'diver') {
+    type = types[idType]
     let desiredWidth, desiredHeight;
-    if (type === 'diver') {
-        desiredWidth = 222;
-        desiredHeight = 258;
-    } else if (type === 'patch') {
-        desiredWidth = 134;
-        desiredHeight = 133;
+    if (imgtype === 'diver') {
+        desiredWidth = type.hdImage.width;
+        desiredHeight = type.hdImage.height;
+    } else if (imgtype === 'patch') {
+        desiredWidth = type.patchImage.width;
+        desiredHeight = type.patchImage.height;
     }
 
     let dWidth, dHeight;
@@ -106,8 +213,9 @@ function drawCroppedImage(image, dx, dy, type = 'diver') {
         dHeight = image.height / (image.width / desiredWidth);
     }
 
-    const srcX = (image.width - (image.height * desiredAspectRatio)) / 2;
-    const srcY = (image.height - (image.width / desiredAspectRatio)) / 2;
+    // change these to crop from center or top left
+    const srcX = 0 //(image.width - (image.height * desiredAspectRatio)) / 2;
+    const srcY = 0 //(image.height - (image.width / desiredAspectRatio)) / 2;
     const srcWidth = dWidth < image.width ? image.width : dWidth;
     const srcHeight = dHeight < image.height ? image.height : dHeight;
     if(srcX < 0) {
@@ -115,4 +223,45 @@ function drawCroppedImage(image, dx, dy, type = 'diver') {
     } else {
         ctx.drawImage(image, srcX, 0, srcWidth - srcX, image.height, dx, dy, desiredWidth, desiredHeight);
     }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    resetCanvas()
+    const radios = document.querySelectorAll('input[type="radio"][name="idType"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', event => {
+            idType = event.target.value;
+            if (idType === "1") {
+                baseImageUrl = type1TempUrl
+                document.querySelectorAll('.type1').forEach(el => {
+                    el.style.display = 'flex'
+                    el.style.flexDirection = 'column'
+                })
+                document.querySelectorAll('.type2').forEach(el => {
+                    el.style.display = 'none'
+                })
+            } else if (idType === "2") {
+                baseImageUrl = type2TempUrl
+                document.querySelectorAll('.type2').forEach(el => {
+                    el.style.display = 'flex'
+                    el.style.flexDirection = 'column'
+                })
+                document.querySelectorAll('.type1').forEach(el => {
+                    el.style.display = 'none'
+                })
+            }
+            resetCanvas()
+        });
+    });
+});
+
+function resetCanvas() {
+    baseImage = new Image();
+    baseImage.src = baseImageUrl;
+    baseImage.onload = function() {
+        ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
+        setTimeout(generateID, 10);
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
 }
