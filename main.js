@@ -145,6 +145,9 @@ function generateID() {
     } else if (idType === '2') {
         ctx.fillText(seaf, 607, 485, 300)
         ctx.fillText(pay, 292, 205, 100)
+        ctx.fillStyle = 'black'
+        ctx.font = '24px Timeless'
+        ctx.fillText('template by TurtleDump', 700, 527, 300)
     }
 
 
