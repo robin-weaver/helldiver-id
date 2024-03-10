@@ -123,6 +123,7 @@ function generateID() {
     const steam = document.getElementById('steamInput').value;
     const psn = document.getElementById('psnInput').value;
     const seaf = document.getElementById('seafIDInput').value;
+    const pay = document.getElementById('payInput').value;
 
     ctx.font = type.font
     ctx.fillStyle = type.fillStyle
@@ -142,8 +143,8 @@ function generateID() {
         ctx.fillText(steam, 534, 514, 160)
         ctx.fillText(psn, 780, 514, 160)
     } else if (idType === '2') {
-        ctx.fillText(seaf, 607, 485)
-        ctx.fillText('HD-01', 292, 205)
+        ctx.fillText(seaf, 607, 485, 300)
+        ctx.fillText(pay, 292, 205, 100)
     }
 
 
